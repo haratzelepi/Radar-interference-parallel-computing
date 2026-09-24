@@ -1,0 +1,27 @@
+# Generated result files
+*.csv
+
+# Local validation utilities
+compare_SER_cuda_serial.c
+compare_decision_regions.c
+
+# Compiled files
+*.o
+*.out
+*.exe
+
+# Compiled executables
+SER_serial
+SER_openMP
+SER_cuda
+benchmark_decision_regions_serial
+benchmark_decision_regions_openMP
+decision_regions_cuda
+
+# Editor temporary files
+.vscode/
+*~
+
+# Local / experimental utilities
+decision_regions_csv.c
+decision_regions_one_csv.c
