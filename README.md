@@ -23,7 +23,7 @@ Shared constellation and detector code is located in `common/`, while the decisi
 
 A two-dimensional grid of complex received values is generated and every grid point is classified by the ML detector.
 
-The grid resolution can be increased to obtain more detailed decision regions, but this also significantly increases the number of ML evaluations and therefore the computational cost.
+The grid resolution can be increased to obtain more detailed decision regions, but this also significantly increases the number of ML evaluations and the computational cost.
 
 ### Symbol Error Rate (SER)
 
