@@ -17,6 +17,8 @@ SER_cuda
 benchmark_decision_regions_serial
 benchmark_decision_regions_openMP
 decision_regions_cuda
+generate_decision_regions
+generate_SER
 
 # Editor temporary files
 .vscode/
@@ -24,4 +26,3 @@ decision_regions_cuda
 
 # Local / experimental utilities
 decision_regions_csv.c
-decision_regions_one_csv.c

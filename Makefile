@@ -3,6 +3,7 @@ NVCC = nvcc
 
 CFLAGS = -O3
 OMPFLAGS = -fopenmp
+
 INCLUDES = -Icommon -Idecision_regions
 LIBS = -lgsl -lgslcblas -lm
 
@@ -11,6 +12,7 @@ COMMON_HEADERS = common/constellation.h common/detector.h
 
 REGIONS_SRC = decision_regions/decision_regions.c
 REGIONS_HEADER = decision_regions/decision_regions.h
+
 REGIONS_SERIAL_SRC = decision_regions/benchmark_decision_regions_serial.c
 REGIONS_OPENMP_SRC = decision_regions/benchmark_decision_regions_openMP.c
 REGIONS_CUDA_SRC = decision_regions/decision_regions_cuda.cu
@@ -19,14 +21,20 @@ SER_SERIAL_SRC = ser/SER_serial.c
 SER_OPENMP_SRC = ser/SER_openMP.c
 SER_CUDA_SRC = ser/SER_cuda.cu
 
+VALIDATION_REGIONS_SRC = decision_regions/generate_decision_regions.c
+VALIDATION_SER_SRC = ser/generate_SER.c
+
 REGIONS_BIN = decision_regions_serial decision_regions_openMP decision_regions_cuda
 SER_BIN = SER_serial SER_openMP SER_cuda
+VALIDATION_BIN = generate_decision_regions generate_SER
 
-.PHONY: SER decision_regions run_SER run_decision_regions clean
+.PHONY: SER decision_regions validation run_SER run_decision_regions run_validation clean
 
 SER: $(SER_BIN)
 
 decision_regions: $(REGIONS_BIN)
+
+validation: $(VALIDATION_BIN)
 
 SER_serial: $(SER_SERIAL_SRC) $(COMMON_SRC) $(COMMON_HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(SER_SERIAL_SRC) $(COMMON_SRC) -o $@ $(LIBS)
@@ -46,6 +54,12 @@ decision_regions_openMP: $(REGIONS_OPENMP_SRC) $(REGIONS_SRC) $(REGIONS_HEADER) 
 decision_regions_cuda: $(REGIONS_CUDA_SRC)
 	$(NVCC) $(CFLAGS) $(INCLUDES) $(REGIONS_CUDA_SRC) -o $@
 
+generate_decision_regions: $(VALIDATION_REGIONS_SRC) $(REGIONS_SRC) $(REGIONS_HEADER) $(COMMON_SRC) $(COMMON_HEADERS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(VALIDATION_REGIONS_SRC) $(REGIONS_SRC) $(COMMON_SRC) -o $@ $(LIBS)
+
+generate_SER: $(VALIDATION_SER_SRC) $(COMMON_SRC) $(COMMON_HEADERS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(VALIDATION_SER_SRC) $(COMMON_SRC) -o $@ $(LIBS)
+
 run_SER: SER
 	./SER_serial
 	./SER_openMP
@@ -56,5 +70,9 @@ run_decision_regions: decision_regions
 	./decision_regions_openMP
 	./decision_regions_cuda
 
+run_validation: validation
+	./generate_decision_regions
+	./generate_SER
+
 clean:
-	rm -f $(REGIONS_BIN) $(SER_BIN)
+	rm -f $(REGIONS_BIN) $(SER_BIN) $(VALIDATION_BIN)

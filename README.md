@@ -65,7 +65,7 @@ make run_SER
 ```
 
 ### Cleanup
-Delete the six executables (leaves CSV result files intact):
+Delete all the executables (leaves CSV result files intact):
 ```bash
 make clean
 ```
@@ -105,7 +105,32 @@ const long long N_samples = (long long)1e2;
 
 ## Results
 
+
 Each run appends benchmark rows to `decision_regions_timing.csv` or `SER_timings.csv`. 
 
 * CPU benchmarks time the main computation, while CUDA also times copying the results back to the host. 
 * The benchmark programs save timing results only; SER-versus-INR data and decision-region visualization data are not exported by these benchmark runs.
+
+### Validation data generation
+
+In addition to the benchmark programs, auxiliary serial programs are provided
+for generating validation data:
+
+- `decision_regions/generate_decision_regions.c` generates CSV data containing
+  the complex-plane grid points and their ML detector decisions.
+- `ser/generate_SER.c` generates SER-versus-INR/SNR data for the TIN, ML and IC
+  detectors using Monte Carlo simulation.
+
+These programs are intended only for correctness validation and data generation;
+they are not included in the performance benchmarks.
+
+Compile the validation programs with:
+
+```bash
+make validation
+```
+
+Run them with:
+```bash
+make run_validation
+```
