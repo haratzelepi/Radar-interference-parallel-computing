@@ -65,7 +65,7 @@ make run_SER
 ```
 
 ### Cleanup
-Delete the six executables and object files (leaves CSV result files intact):
+Delete the six executables (leaves CSV result files intact):
 ```bash
 make clean
 ```
@@ -95,5 +95,5 @@ For SER CUDA, use a power-of-two block size with the current reduction loop; it 
 
 Each run appends benchmark rows to `decision_regions_timing.csv` or `SER_timings.csv`. 
 
-* The decision-regions CPU benchmarks time the ML computation, while CUDA also times copying the matched indices back to the host. 
+* CPU benchmarks time the main computation, while CUDA also times copying the results back to the host. 
 * The benchmark programs save timing results only; SER-versus-INR data and decision-region visualization data are not exported by these benchmark runs.
