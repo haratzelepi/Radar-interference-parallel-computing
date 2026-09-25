@@ -69,8 +69,9 @@ Delete the six executables (leaves CSV result files intact):
 ```bash
 make clean
 ```
+## Configuration
 
-## Thread Settings
+### Thread Settings
 
 To change the number of threads used, edit the corresponding `#define` in the source files and rebuild the task.
 
@@ -90,6 +91,17 @@ For SER CUDA, use a power-of-two block size with the current reduction loop; it 
 #define THREADS_PER_BLOCK 32
 ```
 *Note: The serial versions always use one CPU thread.*
+
+### Monte Carlo samples for SER
+
+To change the number of Monte Carlo samples, edit the corresponding value in each SER source file and rebuild.
+```c
+// ser/SER_serial.c
+// ser/SER_openMP.c
+// ser/SER_cuda.cu
+
+const long long N_samples = (long long)1e2;
+```
 
 ## Results
 
