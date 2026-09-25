@@ -105,6 +105,7 @@ const long long N_samples = (long long)1e2;
 
 ## Results
 
+### Benchmarks
 
 Each run appends benchmark rows to `decision_regions_timing.csv` or `SER_timings.csv`. 
 
